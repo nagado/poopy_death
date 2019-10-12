@@ -46,20 +46,20 @@ object EventHandler {
     @JvmStatic
     @SubscribeEvent
     fun registerItems(event: RegistryEvent.Register<Item>) {
-        event.registry.register(TutorialItem)
+        event.registry.register(PoopItem)
     }
 
     @JvmStatic
     @SubscribeEvent
     fun registerModels(event: ModelRegistryEvent) {
-        ModelLoader.setCustomModelResourceLocation(TutorialItem, 0, ModelResourceLocation(TutorialItem.registryName ?: return, "inventory"))
+        ModelLoader.setCustomModelResourceLocation(PoopItem, 0, ModelResourceLocation(PoopItem.registryName ?: return, "inventory"))
     }
 }
 
-object TutorialItem : Item() {
+object PoopItem : Item() {
     init{
-        this.registryName = ResourceLocation(MODID, "tutorial_item")
-        this.unlocalizedName = "tutorial_item"
+        this.registryName = ResourceLocation(MODID, "poop")
+        this.unlocalizedName = "poop"
         this.creativeTab = CreativeTabs.MISC
     }
 }
