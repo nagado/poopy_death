@@ -1,14 +1,14 @@
 [
 {
-  "modid": "examplemod",
-  "name": "Example Mod",
-  "description": "Example placeholder mod.",
+  "modid": "poopy_death",
+  "name": "Poopy Death",
+  "description": "Poopy Death that fits your demise",
   "version": "${version}",
   "mcversion": "${mcversion}",
   "url": "",
   "updateUrl": "",
-  "authorList": ["ExampleDude"],
-  "credits": "The Forge and FML guys, for making this example",
+  "authorList": ["nagado"],
+  "credits": "Forge, FML, Forgelin - thank you!",
   "logoFile": "",
   "screenshots": [],
   "dependencies": []
