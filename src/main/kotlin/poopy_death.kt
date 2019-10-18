@@ -1,12 +1,18 @@
 import net.minecraft.client.renderer.block.model.ModelResourceLocation
 import net.minecraft.creativetab.CreativeTabs
+import net.minecraft.entity.item.EntityItem
+import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
+import net.minecraft.util.ActionResult
+import net.minecraft.util.EnumHand
 import net.minecraft.util.ResourceLocation
+import net.minecraft.world.World
 import net.minecraftforge.client.event.ModelRegistryEvent
 import net.minecraftforge.client.model.ModelLoader
 import net.minecraftforge.event.RegistryEvent
 import net.minecraftforge.event.entity.living.LivingDeathEvent
+import net.minecraftforge.event.entity.living.LivingDropsEvent
 import net.minecraftforge.fml.common.Mod
 import net.minecraftforge.fml.common.event.FMLInitializationEvent
 import net.minecraftforge.fml.common.event.FMLInterModComms
@@ -15,6 +21,7 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 import net.minecraftforge.fml.common.registry.GameRegistry
 import org.apache.logging.log4j.LogManager
+import sun.font.TrueTypeFont
 
 const val MODID = "poopy_death"
 const val NAME = "Poopy Death"
@@ -61,16 +68,23 @@ object EventHandler {
 @Mod.EventBusSubscriber(modid=MODID)
 object DeathEventHandler {
     @SubscribeEvent
-    fun drop_poop_on_death(event: LivingDeathEvent) {
+    fun drop_poop_on_death(event: LivingDropsEvent) {
         logger.info("Death Detected")
-        logger.info(event.entity.entityDropItem(ItemStack(PoopItem), 0.0F))
+        val dead = event.entityLiving
+        val world = dead.entityWorld
+        event.drops.add(EntityItem(world, dead.posX, dead.posY, dead.posZ, ItemStack(PoopItem)))
     }
 }
 
 object PoopItem : Item() {
-    init{
+    init {
         this.registryName = ResourceLocation(MODID, "poop")
         this.unlocalizedName = "poop"
         this.creativeTab = CreativeTabs.MISC
+        this.canItemEditBlocks()
+    }
+
+    fun onItemRightClick(world: World, player: EntityPlayer, hand: EnumHand, item: EntityItem) {
+        return this.onItemRightClick(world, player, hand, item)  // Need to turn this into bonemeal action
     }
 }
