@@ -1,10 +1,12 @@
 import net.minecraft.client.renderer.block.model.ModelResourceLocation
 import net.minecraft.creativetab.CreativeTabs
 import net.minecraft.item.Item
+import net.minecraft.item.ItemStack
 import net.minecraft.util.ResourceLocation
 import net.minecraftforge.client.event.ModelRegistryEvent
 import net.minecraftforge.client.model.ModelLoader
 import net.minecraftforge.event.RegistryEvent
+import net.minecraftforge.event.entity.living.LivingDeathEvent
 import net.minecraftforge.fml.common.Mod
 import net.minecraftforge.fml.common.event.FMLInitializationEvent
 import net.minecraftforge.fml.common.event.FMLInterModComms
@@ -53,6 +55,15 @@ object EventHandler {
     @SubscribeEvent
     fun registerModels(event: ModelRegistryEvent) {
         ModelLoader.setCustomModelResourceLocation(PoopItem, 0, ModelResourceLocation(PoopItem.registryName ?: return, "inventory"))
+    }
+}
+
+@Mod.EventBusSubscriber(modid=MODID)
+object DeathEventHandler {
+    @SubscribeEvent
+    fun drop_poop_on_death(event: LivingDeathEvent) {
+        logger.info("Death Detected")
+        logger.info(event.entity.entityDropItem(ItemStack(PoopItem), 0.0F))
     }
 }
 
